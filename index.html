@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Борис Очкивский — Fullstack-разработчик</title>
+    <meta name="description" content="Разработка веб-приложений, лендингов, AI-решений, автоматизация и интеграции под ключ." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== CSS ПЕРЕМЕННЫЕ (цвета из баннера) ===== */
+        :root {
+            --bg-primary: #0a0f1c;
+            --bg-secondary: #111827;
+            --bg-card: #1a2236;
+            --bg-card-hover: #24304a;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #00e5ff;
+            --accent-blue: #00b4d8;
+            --accent-glow: rgba(0, 229, 255, 0.15);
+            --border-glow: rgba(0, 229, 255, 0.25);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --radius: 16px;
+            --transition: 0.3s ease;
+        }
+
+        /* ===== ОБНУЛЕНИЕ И БАЗА ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            display: block;
+            max-width: 100%;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 15, 28, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.08);
+            padding: 16px 0;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+        }
+        .logo-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-cyan);
+            background: var(--bg-card);
+        }
+        .logo span {
+            color: var(--accent-cyan);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            position: relative;
+            cursor: pointer;
+        }
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .btn-accent {
+            background: var(--accent-cyan);
+            color: #0a0f1c !important;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            transition: var(--transition);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.3);
+            color: #0a0f1c !important;
+        }
+        .btn-accent::after {
+            display: none !important;
+        }
+
+        /* Бургер */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .burger span {
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        #burger-toggle {
+            display: none;
+        }
+        #burger-toggle:checked ~ .nav-links {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 72px;
+            left: 0;
+            width: 100%;
+            background: var(--bg-primary);
+            padding: 24px;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+            gap: 20px;
+        }
+
+        /* ===== ГЕРО-БАННЕР (изображение) ===== */
+        .hero-banner {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .hero-banner img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ===== ОБО МНЕ ===== */
+        .about {
+            padding: 60px 0 40px;
+        }
+        .about-inner {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            background: var(--bg-card);
+            padding: 40px 48px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(0, 229, 255, 0.08);
+            box-shadow: var(--shadow);
+        }
+        .about-img {
+            flex: 0 0 200px;
+        }
+        .about-img img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-cyan);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+        .about-text h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        .about-text h2 span {
+            color: var(--accent-cyan);
+        }
+        .about-text p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+        .about-text .highlight {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* ===== НАВЫКИ И ИНСТРУМЕНТЫ ===== */
+        .skills {
+            padding: 80px 0;
+        }
+        .skills h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 48px;
+            letter-spacing: -0.5px;
+        }
+        .skills h2 span {
+            color: var(--accent-cyan);
+        }
+        .skills-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .skill-group h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent-cyan);
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+            padding-bottom: 12px;
+        }
+        .skill-row {
+            margin-bottom: 16px;
+        }
+        .skill-row .skill-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .skill-row .skill-label .percent {
+            color: var(--accent-cyan);
+        }
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            background: #2a3a5a;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            border-radius: 10px;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        /* ===== УСЛУГИ ===== */
+        .services {
+            padding: 80px 0;
+        }
+        .services h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 48px;
+            letter-spacing: -0.5px;
+        }
+        .services h2 span {
+            color: var(--accent-cyan);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px 24px 24px;
+            border: 1px solid rgba(0, 229, 255, 0.06);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 229, 255, 0.2);
+            background: var(--bg-card-hover);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        .service-card .service-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            background: #0d1524;
+            border: 1px solid rgba(0, 229, 255, 0.06);
+        }
+        .service-card h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            flex: 1;
+            margin-bottom: 16px;
+        }
+        .service-card .price {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+        }
+        .service-card .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            cursor: pointer;
+            width: fit-content;
+            font-family: 'Inter', sans-serif;
+        }
+        .service-card .btn-download:hover {
+            background: var(--accent-cyan);
+            color: #0a0f1c;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* ===== ПОРТФОЛИО ===== */
+        .portfolio {
+            padding: 80px 0;
+        }
+        .portfolio h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 48px;
+            letter-spacing: -0.5px;
+        }
+        .portfolio h2 span {
+            color: var(--accent-cyan);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .portfolio-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(0, 229, 255, 0.06);
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 229, 255, 0.2);
+            background: var(--bg-card-hover);
+        }
+        .portfolio-card .portfolio-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #0d1524;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.06);
+        }
+        .portfolio-body {
+            padding: 20px 24px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .portfolio-body h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .portfolio-body .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .portfolio-body .tags span {
+            background: rgba(0, 229, 255, 0.08);
+            color: var(--accent-cyan);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        .portfolio-body p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            flex: 1;
+            margin-bottom: 16px;
+        }
+        .portfolio-body .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            cursor: pointer;
+            width: fit-content;
+            font-family: 'Inter', sans-serif;
+        }
+        .portfolio-body .btn-link:hover {
+            background: var(--accent-cyan);
+            color: #0a0f1c;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* ===== КОНТАКТЫ ===== */
+        .contact {
+            padding: 80px 0 60px;
+        }
+        .contact h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        .contact h2 span {
+            color: var(--accent-cyan);
+        }
+        .contact .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            font-size: 1.05rem;
+        }
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            background: var(--bg-card);
+            padding: 40px 48px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(0, 229, 255, 0.08);
+            box-shadow: var(--shadow);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .contact-info {
+            flex: 1;
+            min-width: 220px;
+        }
+        .contact-info h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-cyan);
+        }
+        .contact-info p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .contact-info p strong {
+            color: var(--text-primary);
+        }
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 229, 255, 0.06);
+            color: var(--text-secondary);
+        }
+        .social-btn:hover {
+            background: var(--accent-cyan);
+            color: #0a0f1c;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        .contact-form {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: #0d1524;
+            border: 1px solid rgba(0, 229, 255, 0.08);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #4a5a7a;
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-form .form-agreement {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contact-form .form-agreement input {
+            width: auto;
+            padding: 0;
+            accent-color: var(--accent-cyan);
+        }
+        .contact-form .form-agreement a {
+            color: var(--accent-cyan);
+            text-decoration: underline;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 40px;
+            background: var(--accent-cyan);
+            color: #0a0f1c;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(0, 229, 255, 0.3);
+        }
+
+        /* ===== ФУТЕР ===== */
+        footer {
+            text-align: center;
+            padding: 32px 0;
+            border-top: 1px solid rgba(0, 229, 255, 0.06);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        footer a {
+            color: var(--accent-cyan);
+        }
+
+        /* ===== МОДАЛКА ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: var(--bg-card);
+            margin: 5% auto;
+            padding: 40px;
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            color: var(--text-primary);
+        }
+        .modal-content h2 {
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+        }
+        .modal-content p {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+        .modal-content strong {
+            color: var(--text-primary);
+        }
+        .close-modal {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .close-modal:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 992px) {
+            .about-inner {
+                flex-direction: column;
+                text-align: center;
+                padding: 32px 24px;
+            }
+            .about-img {
+                flex: 0 0 160px;
+            }
+            .skills-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        @media (max-width: 768px) {
+            .burger {
+                display: flex;
+            }
+            .nav-links {
+                display: none;
+            }
+            .header-inner {
+                flex-wrap: wrap;
+            }
+            .contact-wrapper {
+                padding: 24px;
+                flex-direction: column;
+            }
+            .contact-info {
+                text-align: center;
+            }
+            .contact-info p {
+                justify-content: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+            .about-inner {
+                padding: 24px 16px;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-banner img {
+                max-height: 300px;
+            }
+            .logo {
+                font-size: 18px;
+            }
+            .logo-avatar {
+                width: 32px;
+                height: 32px;
+            }
+            .about-text h2 {
+                font-size: 1.5rem;
+            }
+            .services h2,
+            .portfolio h2,
+            .skills h2,
+            .contact h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ХЕДЕР ===== -->
+    <header>
+        <div class="container header-inner">
+            <div class="logo">
+                <img src="assets/img/avatar.jpg" alt="Борис Очкивский" class="logo-avatar" />
+                Борис <span>Очкивский</span>
+            </div>
+            <input type="checkbox" id="burger-toggle" />
+            <label for="burger-toggle" class="burger">
+                <span></span><span></span><span></span>
+            </label>
+            <nav class="nav-links">
+                <a href="#about">Обо мне</a>
+                <a href="#skills">Навыки</a>
+                <a href="#services">Услуги</a>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#contact" class="btn-accent">Связаться</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== ГЕРО-БАННЕР ===== -->
+    <div class="hero-banner">
+        <img src="assets/img/banner.jpg" alt="Fullstack-разработчик — Борис Очкивский" />
+    </div>
+
+    <!-- ===== ОБО МНЕ ===== -->
+    <section class="about container" id="about">
+        <div class="about-inner">
+            <div class="about-img">
+                <img src="assets/img/photo.jpg" alt="Борис Очкивский" />
+            </div>
+            <div class="about-text">
+                <h2>Создаю <span>цифровые решения</span> для бизнеса</h2>
+                <p>
+                    Fullstack-разработчик с опытом создания веб-приложений, адаптивных лендингов 
+                    с интерактивной логикой, интеграций с CRM, API и AI-решений.
+                </p>
+                <p>
+                    Работаю на чистом <span class="highlight">HTML/CSS/JS</span> + <span class="highlight">Python</span> для бэкенда. 
+                    Использую <span class="highlight">вайбкодинг</span> для ускорения разработки без потери качества. 
+                    Превращаю бизнес-задачи в готовые цифровые продукты, ориентируясь на результат.
+                </p>
+                <p>
+                    🚀 <strong>Веб-приложения</strong> · <strong>Лендинги</strong> · <strong>AI-интеграции</strong> · <strong>Автоматизация</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== НАВЫКИ И ИНСТРУМЕНТЫ ===== -->
+    <section class="skills container" id="skills">
+        <h2>Навыки и <span>инструменты</span></h2>
+        <div class="skills-wrapper">
+            <div>
+                <div class="skill-group">
+                    <h3>Веб-разработка</h3>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>HTML5 / CSS3 / JS</span><span class="percent">95%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:95%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Адаптивная вёрстка</span><span class="percent">90%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:90%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Интерактивные элементы (JS)</span><span class="percent">85%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:85%"></div></div>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3>Бэкенд и автоматизация</h3>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Python (Flask, API)</span><span class="percent">80%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>SQL (SQLite, PostgreSQL)</span><span class="percent">75%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Парсинг (BeautifulSoup, Selenium)</span><span class="percent">70%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:70%"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="skill-group">
+                    <h3>AI и нейросети</h3>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Интеграция ChatGPT / GigaChat</span><span class="percent">90%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:90%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Промпт-инжиниринг</span><span class="percent">85%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:85%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Создание AI-ассистентов</span><span class="percent">80%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3>Инфраструктура и DevOps</h3>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Деплой на серверах (Linux)</span><span class="percent">75%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Git, GitHub</span><span class="percent">85%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:85%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="skill-label"><span>Вайбкодинг (разработка с ИИ)</span><span class="percent">90%</span></div>
+                        <div class="progress-track"><div class="progress-fill" style="width:90%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== УСЛУГИ ===== -->
+    <section class="services container" id="services">
+        <h2>Мои <span>услуги</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="assets/img/service1.jpg" alt="Лендинг с интеграциями" class="service-img" />
+                <h4>Лендинг с интеграциями</h4>
+                <p>Разработаю продающий лендинг с адаптивом, интерактивной логикой и интеграциями с CRM, Telegram, Google Таблицами.</p>
+                <div class="price">от 16 000 ₽</div>
+                <a href="files/service1.docx" class="btn-download" download>📄 Скачать описание</a>
+            </div>
+            <div class="service-card">
+                <img src="assets/img/service2.jpg" alt="Веб-приложение на Python" class="service-img" />
+                <h4>Веб-приложение / MVP</h4>
+                <p>Создам веб-приложение, личный кабинет или MVP на Python под ключ: авторизация, база данных, адаптивный интерфейс.</p>
+                <div class="price">от 22 000 ₽</div>
+                <a href="files/service2.docx" class="btn-download" download>📄 Скачать описание</a>
+            </div>
+            <div class="service-card">
+                <img src="assets/img/service3.jpg" alt="Автоматизация и парсинг" class="service-img" />
+                <h4>Автоматизация и парсинг</h4>
+                <p>Напишу скрипт для автоматизации рутины: парсинг данных, API-интеграции, обмен данными между сервисами.</p>
+                <div class="price">от 10 000 ₽</div>
+                <a href="files/service3.docx" class="btn-download" download>📄 Скачать описание</a>
+            </div>
+            <div class="service-card">
+                <img src="assets/img/service4.jpg" alt="Интеграция между сервисами" class="service-img" />
+                <h4>Интеграция между сервисами</h4>
+                <p>Настрою автоматический обмен данными между сайтом, CRM, Телеграмом, таблицами и другими системами.</p>
+                <div class="price">от 12 000 ₽</div>
+                <a href="files/service4.docx" class="btn-download" download>📄 Скачать описание</a>
+            </div>
+            <div class="service-card">
+                <img src="assets/img/service5.jpg" alt="ИИ-ассистент" class="service-img" />
+                <h4>ИИ-ассистент для бизнеса</h4>
+                <p>Создам умного помощника на основе нейросетей: консультации, поддержка, обработка запросов 24/7.</p>
+                <div class="price">от 40 000 ₽</div>
+                <a href="files/service5.docx" class="btn-download" download>📄 Скачать описание</a>
+            </div>
+            <div class="service-card">
+                <img src="assets/img/service6.jpg" alt="Внедрение нейросетей" class="service-img" />
+                <h4>Внедрение нейросетей</h4>
+                <p>Интегрирую ChatGPT, GigaChat, DeepSeek в ваши бизнес-процессы: автоматизация, анализ, генерация контента.</p>
+                <div class="price">от 24 000 ₽</div>
+                <a href="files/service6.docx" class="btn-download" download>📄 Скачать описание</a>
+            </div>
+            <div class="service-card">
+                <img src="assets/img/service7.jpg" alt="Комплексное решение" class="service-img" />
+                <h4>Комплексное решение</h4>
+                <p>Полный цикл: веб-приложение + автоматизация + ИИ под ключ. Всё в одной системе для вашего бизнеса.</p>
+                <div class="price">от 80 000 ₽</div>
+                <a href="files/service7.docx" class="btn-download" download>📄 Скачать описание</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ПОРТФОЛИО ===== -->
+    <section class="portfolio container" id="portfolio">
+        <h2>Мои <span>проекты</span></h2>
+        <div class="portfolio-grid">
+
+            <!-- Проект 1 -->
+            <div class="portfolio-card">
+                <img src="assets/img/port1.jpg" alt="Лендинг-портфолио" class="portfolio-img" />
+                <div class="portfolio-body">
+                    <h4>Адаптивный лендинг-портфолио</h4>
+                    <div class="tags"><span>HTML5</span><span>CSS3</span><span>JS</span></div>
+                    <p>Разработал адаптивный лендинг-портфолио с интерактивными элементами и модальными окнами.</p>
+                    <a href="https://github.com/BorisOchkivskii/boris-landing/blob/main/README.md" target="_blank" class="btn-link">🔗 Смотреть проект</a>
+                </div>
+            </div>
+
+            <!-- Проект 2 -->
+            <div class="portfolio-card">
+                <img src="assets/img/port2.jpg" alt="Промо-лендинг фитнес" class="portfolio-img" />
+                <div class="portfolio-body">
+                    <h4>Промо-лендинг для фитнес-тренера</h4>
+                    <div class="tags"><span>HTML5</span><span>CSS3</span><span>JS</span></div>
+                    <p>Интерактивный лендинг с кастомным слайдером и формой записи на консультацию.</p>
+                    <a href="https://github.com/BorisOchkivskii/usmanova-landing/blob/main/README.md" target="_blank" class="btn-link">🔗 Смотреть проект</a>
+                </div>
+            </div>
+
+            <!-- Проект 3 -->
+            <div class="portfolio-card">
+                <img src="assets/img/port3.jpg" alt="Мой рекомендатор" class="portfolio-img" />
+                <div class="portfolio-body">
+                    <h4>Telegram-бот «Мой Рекомендатор»</h4>
+                    <div class="tags"><span>Python</span><span>SQLite</span><span>API</span></div>
+                    <p>Веб-приложение в Telegram для хранения и управления личными рекомендациями (CRUD, пагинация).</p>
+                    <a href="https://vk.com/wall1075839227_14" target="_blank" class="btn-link">🔗 Смотреть проект</a>
+                </div>
+            </div>
+
+            <!-- Проект 4 -->
+            <div class="portfolio-card">
+                <img src="assets/img/port4.jpg" alt="AI-ассистент психолога" class="portfolio-img" />
+                <div class="portfolio-body">
+                    <h4>AI-ассистент православного психолога</h4>
+                    <div class="tags"><span>Python</span><span>GigaChat</span><span>ЮMoney</span></div>
+                    <p>Интеграция нейросети для ответов на запросы, платёжная система, автоматизация обработки заявок.</p>
+                    <a href="https://vk.com/@1075839227-pravoslavnyi-psihologicheskii-ai-assistent-kak-byl-sozdan-bo" target="_blank" class="btn-link">🔗 Смотреть проект</a>
+                </div>
+            </div>
+
+            <!-- Проект 5 -->
+            <div class="portfolio-card">
+                <img src="assets/img/port5.jpg" alt="Запись в салон красоты" class="portfolio-img" />
+                <div class="portfolio-body">
+                    <h4>Чат-бот для записи в салон красоты</h4>
+                    <div class="tags"><span>Python</span><span>CRM</span><span>API</span></div>
+                    <p>Автоматическая запись клиентов, выбор услуги/мастера/времени, напоминания, интеграция с CRM.</p>
+                    <a href="https://vk.com/@1075839227-telegram-bot-dlya-onlain-zapisi-v-salon-krasoty-garmoniya" target="_blank" class="btn-link">🔗 Смотреть проект</a>
+                </div>
+            </div>
+
+            <!-- Проект 6 (НОВЫЙ) -->
+            <div class="portfolio-card">
+                <img src="assets/img/port6.jpg" alt="Российский AI-ассистент" class="portfolio-img" />
+                <div class="portfolio-body">
+                    <h4>Российский AI-ассистент (Telegram бот)</h4>
+                    <div class="tags"><span>Python</span><span>YandexGPT</span><span>GigaChat</span></div>
+                    <p>Telegram-бот, объединяющий возможности YandexGPT и GigaChat. Поддержка подписки через Telegram Payments.</p>
+                    <a href="https://github.com/BorisOchkivskii/Ai_assistant/blob/master/README.md" target="_blank" class="btn-link">🔗 Смотреть проект</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="contact container" id="contact">
+        <h2>Давайте <span>работать</span> вместе</h2>
+        <p class="subtitle">Напишите мне — обсудим ваш проект и я предложу оптимальное решение</p>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h4>Контакты</h4>
+                <p>📞 <strong><a href="tel:+79102093327">+7 910 209 3327</a></strong></p>
+                <p>✉️ <strong><a href="mailto:o.evtihiy@mail.ru">o.evtihiy@mail.ru</a></strong></p>
+                <p>📍 <strong>Россия, г. Орёл</strong></p>
+                <div class="social-links">
+                    <a href="https://t.me/BorisOchkivskii" target="_blank" class="social-btn">📱 Telegram</a>
+                    <a href="https://github.com/BorisOchkivskii" target="_blank" class="social-btn">🐙 GitHub</a>
+                    <a href="https://vk.com/id1075839227" target="_blank" class="social-btn">📘 VK</a>
+                    <a href="https://dzen.ru/id/68dfcad146a9bf1dac95bc40" target="_blank" class="social-btn">📰 Дзен</a>
+                </div>
+            </div>
+            <form class="contact-form" action="mailto:o.evtihiy@mail.ru" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Ваше имя" required />
+                <input type="tel" name="phone" placeholder="Номер телефона" required />
+                <textarea name="message" placeholder="Опишите задачу..."></textarea>
+                <div class="form-agreement">
+                    <input type="checkbox" required />
+                    <label>Я согласен на <a href="#" id="open-privacy">обработку персональных данных</a></label>
+                </div>
+                <button type="submit">Отправить заявку</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== ФУТЕР ===== -->
+    <footer>
+        <div class="container">
+            <p>© 2025 Борис Очкивский. Все права защищены. <a href="#" id="open-privacy-footer">Политика конфиденциальности</a></p>
+        </div>
+    </footer>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ПОЛИТИКИ ===== -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Политика конфиденциальности</h2>
+            <p>Настоящая Политика конфиденциальности регулирует порядок обработки и защиты персональных данных пользователей сайта (далее – Пользователи).</p>
+            <p><strong>1. Какие данные собираются</strong><br />
+            При заполнении формы обратной связи на сайте, Пользователь предоставляет: имя, номер телефона, адрес электронной почты, текст сообщения.</p>
+            <p><strong>2. Цели сбора данных</strong><br />
+            Персональные данные собираются для связи с Пользователем, обработки его заявки, предоставления консультации по услугам.</p>
+            <p><strong>3. Обработка и хранение</strong><br />
+            Данные обрабатываются в соответствии с Федеральным законом РФ № 152-ФЗ. Хранятся на защищённых серверах и не передаются третьим лицам.</p>
+            <p><strong>4. Согласие Пользователя</strong><br />
+            Отправляя форму, Пользователь даёт добровольное согласие на обработку указанных данных.</p>
+            <p><strong>5. Срок действия</strong><br />
+            Политика действует бессрочно. Актуальная версия всегда находится на этом сайте.</p>
+        </div>
+    </div>
+
+    <!-- ===== JS ДЛЯ МОДАЛКИ И ПЛАВНОГО СКРОЛЛА ===== -->
+    <script>
+        // Модалка
+        const modal = document.getElementById('privacyModal');
+        const openBtns = document.querySelectorAll('#open-privacy, #open-privacy-footer');
+        const closeBtn = document.querySelector('.close-modal');
+
+        openBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Плавный скролл для всех якорных ссылок (включая навигацию)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Закрываем мобильное меню при клике
+                    const burgerCheckbox = document.getElementById('burger-toggle');
+                    if (burgerCheckbox && burgerCheckbox.checked) {
+                        burgerCheckbox.checked = false;
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
